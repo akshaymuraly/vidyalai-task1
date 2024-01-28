@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost&family=Single+Day&display=swap');
+
+.header>h1{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    color: #717f81;
+    font-family: 'Single Day', cursive;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    font-size: 3rem;
+    position: relative;
+}
