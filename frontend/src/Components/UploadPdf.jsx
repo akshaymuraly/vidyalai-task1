@@ -7,10 +7,13 @@ import { Document, Page, pdfjs } from "react-pdf";
 import PdfContent from "./pdfContent.jsx";
 import DemoPdf from "./Skelton/DemoPdf.jsx";
 import GoDownBtn from "./GoDownBtn.jsx";
+import { userActions } from "../Store/Store.js";
+import { useDispatch } from "react-redux";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const UploadPdf = () => {
+  const dispatch = useDispatch();
   const filDropAreaRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading,setLoading] = useState(false)
@@ -60,9 +63,16 @@ const UploadPdf = () => {
     console.log(formData);
     try {
       const response = await axios.post("api/pdfupload", formData);
-      console.log(response.data);
+      setPdf(true)
     } catch (err) {
-      console.log(err);
+      setPdf(false);
+       if(err?.response?.status===401){
+        console.log(err)
+        setErrorMessage(err?.response?.data?.message||"Authorization failed,login again!")
+        setTimeout(()=>dispatch(userActions.userLogout()),3000);
+        return
+      }
+      setErrorMessage(err?.response?.data?.message||"Something went wrong!")
     }
   };
   const handleselectPages = (e) => {
@@ -117,8 +127,13 @@ const UploadPdf = () => {
         setTimeout(()=>setErrorMessage(""),3000)
       }
     } catch (err) {
-      console.error(err);
       setLoading(false)
+      if(err?.response?.status===401){
+        setErrorMessage(err?.response?.data?.message||"Authorization failed,login again!")
+        setTimeout(()=>dispatch(userActions.userLogout()),3000);
+        return
+      }
+      setErrorMessage(err?.response?.data?.message||"Something went wrong!")
     }
   };
   useEffect(() => {
@@ -160,7 +175,7 @@ const UploadPdf = () => {
   useEffect(() => {
     console.log("Selected file: ", inputs);
     if (inputs.file) {
-      handleUploadFile().then(() => setPdf(true));
+      handleUploadFile()
     }
   }, [inputs]);
   useEffect(() => console.log(payload), [payload]);

@@ -5,7 +5,6 @@ import "./pdfContent.css";
 
 const PdfContent = ({ inputs, payload, handleselectPages }) => {
   const [numPages, setNumPages] = useState("");
-  //   const [checkboxRef, setCheckboxRefs] = useState([]);
   const checkboxRef = useRef([]);
   checkboxRef.current = [];
   const addToRefArray = (e) => {
@@ -16,7 +15,7 @@ const PdfContent = ({ inputs, payload, handleselectPages }) => {
     setNumPages(numPages);
   }
   function onPageClick(index) {
-    console.log(checkboxRef.current);
+    // console.log(checkboxRef.current);
     checkboxRef.current[index].click();
   }
 
@@ -61,7 +60,6 @@ const PdfContent = ({ inputs, payload, handleselectPages }) => {
           </div>
         ))}
       </Document>
-      <p>{/* Page {pageNumber} of {numPages} */}</p>
     </div>
   );
 };

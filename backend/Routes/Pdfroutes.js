@@ -7,9 +7,10 @@ const {
   getPdf,
   generateNewPdf,
 } = require("../Controllers/Pdfcontrollers");
+const { cookieValidation } = require("../Controllers/UserControllers");
 
-router.post("/pdfupload", upload.single("file"), pdfUpload);
-router.get("/getpdf/:filename", getPdf);
-router.post("/generatepdf/:originalfile", generateNewPdf);
+router.post("/pdfupload", cookieValidation, upload.single("file"), pdfUpload);
+router.get("/getpdf/:filename", cookieValidation, getPdf);
+router.post("/generatepdf/:originalfile", cookieValidation, generateNewPdf);
 
 module.exports = router;
