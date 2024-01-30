@@ -15,11 +15,7 @@ const UserRouter = require("./Routes/USerRoutes");
 mongooseConnection();
 
 // ------------------Middlewares------------------------------------
-app.use(
-  express.static(
-    path.join(__dirname, "vidyalai-task1/backend/Controllers/uploads")
-  )
-);
+app.use(express.static(path.resolve(__dirname, "/Controllers/uploads")));
 app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieparser());
