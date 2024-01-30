@@ -20,15 +20,15 @@ app.use(
     path.join(__dirname, "vidyalai-task1/backend/Controllers/uploads")
   )
 );
-// app.use(ErrorHandlerBlock);
 app.use(express.json());
-app.use(cors({ credentials: true, origin: "*" }));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieparser());
-// app.use(ErrorHandlerBlock);
 
 //-------------------Routes-----------------------------------------
 app.use("/api", pdfRouter);
 app.use("/api/user", UserRouter);
+
+//-------------------Error handler----------------------------------
 app.use(ErrorHandlerBlock);
 
 //-------------------Server Initializing----------------------------

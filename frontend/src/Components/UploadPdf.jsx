@@ -9,6 +9,7 @@ import DemoPdf from "./Skelton/DemoPdf.jsx";
 import GoDownBtn from "./GoDownBtn.jsx";
 import { userActions } from "../Store/Store.js";
 import { useDispatch } from "react-redux";
+axios.defaults.withCredentials = true;
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
@@ -60,7 +61,7 @@ const UploadPdf = () => {
     for (const key in inputs) {
       formData.append(key, inputs[key]);
     }
-    console.log(formData);
+    // console.log(formData);
     try {
       const response = await axios.post("api/pdfupload", formData);
       setPdf(true)
@@ -97,7 +98,7 @@ const UploadPdf = () => {
   };
   const handleCreateNewPdf = async () => {
     if(!inputs.file){
-      console.log("No file selected")
+      // console.log("No file selected")
      setErrorMessage("No files selected!") 
      setTimeout(()=>setErrorMessage(""),3000)
      return
@@ -173,7 +174,7 @@ const UploadPdf = () => {
   }, [url]);
 
   useEffect(() => {
-    console.log("Selected file: ", inputs);
+    // console.log("Selected file: ", inputs);
     if (inputs.file) {
       handleUploadFile()
     }

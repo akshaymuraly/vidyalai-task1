@@ -1,9 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { Page, Document } from "react-pdf";
 import { TiTick } from "react-icons/ti";
 import "./pdfContent.css";
 
+
 const PdfContent = ({ inputs, payload, handleselectPages }) => {
+  const settingUpHeader = useMemo(()=>({
+  withCredentials:true
+}),[])
   const [numPages, setNumPages] = useState("");
   const checkboxRef = useRef([]);
   checkboxRef.current = [];
@@ -21,15 +25,16 @@ const PdfContent = ({ inputs, payload, handleselectPages }) => {
 
   return (
     <div><Document
-        className="pdf-container"
+        options={settingUpHeader}
+                className="pdf-container"
         width={600 * numPages > window.innerWidth ? 600 * 3 : 600 * numPages}
-        file={`http://localhost:5000/api/getpdf/${encodeURIComponent(
+        file={`api/getpdf/${encodeURIComponent(
           inputs.file.name
         )}`}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         {Array.from({ length: numPages }).map((page, index) => (
-          <div className={`page-container`} onClick={() => onPageClick(index)}>
+          <div key={index} className={`page-container`} onClick={() => onPageClick(index)}>
             <div
               className={`pagenumber-check-box ${
                 payload.pagenumber.includes(index + 1)
